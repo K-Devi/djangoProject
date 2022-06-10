@@ -1,7 +1,7 @@
 import random
 import pdfkit
 # from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse 
 
 # from django.shortcuts import render
 from django.template.loader import get_template
@@ -39,7 +39,7 @@ class QuestionThemeViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             chapterid = request.GET.get('chapterid')
-            return HttpResponse(self.queryset.filter(chapterid=chapterid))
+            return JsonResponse(self.queryset.filter(chapterid=chapterid))
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -49,7 +49,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             questionthemeid = request.GET.get('questionthemeid')
-            return HttpResponse(self.queryset.filter(questionthemeid=questionthemeid))
+            return JsonResponse(self.queryset.filter(questionthemeid=questionthemeid))
 
 class CatalogViewSet(viewsets.ModelViewSet):
     queryset = ImageCatalog.objects.all()
@@ -63,7 +63,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             catalogid = request.GET.get('catalogid')
-            return HttpResponse(self.queryset.filter(catalog__id=catalogid))
+            return JsonResponse(self.queryset.filter(catalog__id=catalogid))
 
 
 class TopicViewSet(viewsets.ModelViewSet):
@@ -78,7 +78,7 @@ class TopicRuleViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             topicid = request.GET.get('topicid')
-            return HttpResponse(self.queryset.filter(topicid=topicid))
+            return JsonResponse(self.queryset.filter(topicid=topicid))
 
 
 # @login_required
