@@ -43,7 +43,9 @@ class ChaptersViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             subjectid = request.GET.get('subjectid')
-            return HttpResponse(self.queryset.filter(subjectid=subjectid))
+            chapterlist = self.queryset.filter(subjectid=subjectid)
+            return JsonResponse(data=chapterlist,
+                                safe=False)
 
 
 class QuestionThemeViewSet(viewsets.ModelViewSet):
