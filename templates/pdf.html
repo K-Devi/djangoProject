@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+</head>
+<body>
+<div class="row">
+    <div class="column"><p>{{ subject }}</p></div>
+  <div class="column" style="text-align: right;"><p>{{ chapter }}</p></div>
+</div>
+<div><p style="text-align: center;">{{ name }}</p></div>
+{% for i in variants %}
+<p style="text-align: center;">Вариант №{{i}}</p>
+<p style="text-align: center;"><br></p>
+    {% for j in list %}
+        <p style="text-align: justify;">{{j}}. {{list.body}}</p>
+        <p style="text-align: right;"><br></p>
+    {% endfor %}
+{% endfor %}
+</body>
+</html>
