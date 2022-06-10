@@ -65,7 +65,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             questionthemeid = request.GET.get('questionthemeid')
-            data = self.queryset.filter(questionthemeid=questionthemeid)
+            data = self.queryset.filter(questionthemeid=questionthemeid).values()
             return JsonResponse({"models_to_return": list(data)})
 
 class CatalogViewSet(viewsets.ModelViewSet):
@@ -81,7 +81,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             catalogid = request.GET.get('catalogid')
-            data = self.queryset.filter(catalog__id=catalogid)
+            data = self.queryset.filter(catalog__id=catalogid).values()
             return JsonResponse({"models_to_return": list(data)})
 
 
