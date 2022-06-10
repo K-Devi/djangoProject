@@ -65,11 +65,13 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             questionthemeid = request.GET.get('questionthemeid')
-            return HttpResponse(self.queryset.filter(questionthemeid=questionthemeid), content_type="application/json")
+            data = self.queryset.filter(questionthemeid=questionthemeid)
+            return JsonResponse({"models_to_return": list(data)})
 
 class CatalogViewSet(viewsets.ModelViewSet):
     queryset = ImageCatalog.objects.all()
     serializer_class = ImageCatalogSerializer
+
 
 
 class ImageViewSet(viewsets.ModelViewSet):
@@ -79,7 +81,8 @@ class ImageViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             catalogid = request.GET.get('catalogid')
-            return HttpResponse(self.queryset.filter(catalog__id=catalogid), content_type="application/json")
+            data = self.queryset.filter(catalog__id=catalogid)
+            return JsonResponse({"models_to_return": list(data)})
 
 
 class TopicViewSet(viewsets.ModelViewSet):
