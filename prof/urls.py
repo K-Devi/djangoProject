@@ -7,6 +7,7 @@ from rest_framework_simplejwt.views import (
 )
 from rest_framework import routers, permissions
 from . import views
+# from .views import Login
 
 router = routers.DefaultRouter()
 router.register(r'subjects', views.SubjectViewSet)
@@ -34,7 +35,8 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('', include(router.urls)),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('login/', Login.as_view(), name='login'),
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('pdf/', views.topic_generator, name='pdf')
 ]

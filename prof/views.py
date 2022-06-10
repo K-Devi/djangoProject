@@ -1,10 +1,12 @@
 import random
 import pdfkit
 # from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.contrib import auth
+from django.http import HttpResponse, JsonResponse
 
 # from django.shortcuts import render
 from django.template.loader import get_template
+from django.views import View
 from rest_framework import viewsets
 # from rest_framework.response import Response
 
@@ -13,6 +15,15 @@ from rest_framework import viewsets
 from .serializers import *
 
 # Create your views here.
+
+# class Login(View):
+#     def post(self, request):
+#         user = request.POST.get('username')
+#         password = request.POST.get('password')
+#         obj = auth.authenticate(request, username=user, password=password)
+#         if obj:
+#             return HttpResponse('Ok')
+
 
 class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
@@ -29,8 +40,10 @@ class ChaptersViewSet(viewsets.ModelViewSet):
     queryset = Chapter.objects.all()
     serializer_class = ChapterSerializer
 
-    def get_queryset(self):
-        return self.queryset.filter(subjectid__profile__user=self.request.user)
+    def list(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            subjectid = request.GET.get('subjectid')
+            return HttpResponse(self.queryset.filter(subjectid=subjectid), content_type="application/json")
 
 
 class QuestionThemeViewSet(viewsets.ModelViewSet):
@@ -40,7 +53,7 @@ class QuestionThemeViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             chapterid = request.GET.get('chapterid')
-            return HttpResponse(self.queryset.filter(chapterid=chapterid))
+            return HttpResponse(self.queryset.filter(chapterid=chapterid), content_type="application/json")
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -50,7 +63,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             questionthemeid = request.GET.get('questionthemeid')
-            return HttpResponse(self.queryset.filter(questionthemeid=questionthemeid))
+            return HttpResponse(self.queryset.filter(questionthemeid=questionthemeid), content_type="application/json")
 
 class CatalogViewSet(viewsets.ModelViewSet):
     queryset = ImageCatalog.objects.all()
@@ -64,7 +77,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             catalogid = request.GET.get('catalogid')
-            return HttpResponse(self.queryset.filter(catalog__id=catalogid))
+            return HttpResponse(self.queryset.filter(catalog__id=catalogid), content_type="application/json")
 
 
 class TopicViewSet(viewsets.ModelViewSet):
@@ -79,7 +92,7 @@ class TopicRuleViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             topicid = request.GET.get('topicid')
-            return HttpResponse(self.queryset.filter(topicid=topicid))
+            return HttpResponse(self.queryset.filter(topicid=topicid), content_type="application/json")
 
 
 # @login_required
