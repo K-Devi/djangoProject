@@ -1,18 +1,29 @@
 import random
 import pdfkit
 # from django.contrib.auth.decorators import login_required
+from django.contrib import auth
 from django.http import HttpResponse
 
 # from django.shortcuts import render
 from django.template.loader import get_template
+from django.views import View
 from rest_framework import viewsets
 # from rest_framework.response import Response
 
 # from .models import *
+from rest_framework.views import APIView
 
 from .serializers import *
 
 # Create your views here.
+class LoginAPIView(View):
+     def post(self,request):
+         try:
+             user = request.POST.get('username', None)
+             password = request.POST.get('password', None)
+             obj = auth.authenticate(request, username=user, password=password)
+         except: return JsonResponse
+
 
 class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
