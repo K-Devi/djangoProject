@@ -22,7 +22,7 @@ class LoginAPIView(View):
              user = request.POST.get('username', None)
              password = request.POST.get('password', None)
              obj = auth.authenticate(request, username=user, password=password)
-         except: return JsonResponse
+         except: return None
 
 
 class SubjectViewSet(viewsets.ModelViewSet):
