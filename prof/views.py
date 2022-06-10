@@ -16,13 +16,13 @@ from .serializers import *
 
 # Create your views here.
 
-# class Login(View):
-#     def post(self, request):
-#         user = request.POST.get('username')
-#         password = request.POST.get('password')
-#         obj = auth.authenticate(request, username=user, password=password)
-#         if obj:
-#             return HttpResponse('Ok')
+class Login(View):
+    def post(self, request):
+        user = request.POST.get('username')
+        password = request.POST.get('password')
+        obj = auth.authenticate(request, username=user, password=password)
+        if obj:
+            return HttpResponse('Ok')
 
 
 class SubjectViewSet(viewsets.ModelViewSet):
@@ -43,7 +43,7 @@ class ChaptersViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if request.method == 'GET':
             subjectid = request.GET.get('subjectid')
-            return HttpResponse(self.queryset.filter(subjectid=subjectid), content_type="application/json")
+            return HttpResponse(self.queryset.filter(subjectid=subjectid))
 
 
 class QuestionThemeViewSet(viewsets.ModelViewSet):
