@@ -21,6 +21,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.queryset.filter(profile__subject__id=self.request.user.id)
 
+
 class ChaptersViewSet(viewsets.ModelViewSet):
 
     # http://127.0.0.1:8000/chapters/ Get список разделов Post создание новой ТОЛЬКО название раздела текстовое поле
